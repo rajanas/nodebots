@@ -1,0 +1,54 @@
+{
+    "name": "atsintrafaqbot",
+    "description": "",
+    "services": [
+        {
+            "type": "abs",
+            "tenantId": "51d939e2-aefc-44e9-83a7-645e3ad16a3b",
+            "subscriptionId": "c91d6dfc-4d7d-4f6a-88ca-06bcd59c4bd7",
+            "resourceGroup": "atsbodenoderg",
+            "serviceName": "atsintrafaqbot",
+            "name": "atsintrafaqbot",
+            "id": "1",
+            "appId": "8157aa12-a7d6-4e40-8c9c-024d189e7ea8"
+        },
+        {
+            "type": "blob",
+            "connectionString": "DefaultEndpointsProtocol=https;AccountName=atsintrafaqbot;AccountKey=5wRecIymb9gy6JlWlQSun8zSPes7IPmuAVjYvaTUC6jNopuBC/559Zv4BhwlWuJhezwIPaOmua45iljseHl38w==;",
+            "tenantId": "51d939e2-aefc-44e9-83a7-645e3ad16a3b",
+            "subscriptionId": "c91d6dfc-4d7d-4f6a-88ca-06bcd59c4bd7",
+            "resourceGroup": "atsbodenoderg",
+            "serviceName": "atsintrafaqbot",
+            "id": "2"
+        },
+        {
+            "type": "endpoint",
+            "appId": "",
+            "appPassword": "",
+            "endpoint": "http://localhost:3978/api/messages",
+            "name": "development",
+            "id": "3"
+        },
+        {
+            "type": "endpoint",
+            "appId": "8157aa12-a7d6-4e40-8c9c-024d189e7ea8",
+            "appPassword": "IAr+Q?LLQ2sPcThywQkGc9$@",
+            "endpoint": "https://atsintrafaqbot.azurewebsites.net/api/messages",
+            "name": "production",
+            "id": "4"
+        },
+        {
+            "type": "appInsights",
+            "instrumentationKey": "2f6dfdc0-5fa5-4885-b838-cd181250984b",
+            "applicationId": "54fbb95c-97c2-47d5-8428-bcc01f122b75",
+            "apiKeys": {},
+            "tenantId": "51d939e2-aefc-44e9-83a7-645e3ad16a3b",
+            "subscriptionId": "c91d6dfc-4d7d-4f6a-88ca-06bcd59c4bd7",
+            "resourceGroup": "atsbodenoderg",
+            "serviceName": "atsintrafaqbot",
+            "id": "5"
+        }
+    ],
+    "padlock": "",
+    "version": "2.0"
+}
