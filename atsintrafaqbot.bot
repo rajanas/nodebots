@@ -47,6 +47,15 @@
             "resourceGroup": "atsbodenoderg",
             "serviceName": "atsintrafaqbot",
             "id": "5"
+        },
+        {
+             "type": "qna",
+             "name": "AtsFaqQnA",
+             "kbId": "d4c1a36b-e451-46fb-b0ad-4f208b630dcc",
+             "hostname": "https://atsfaqqna.azurewebsites.net/qnamaker",
+             "endpointKey": "e599f057-e0b5-4faf-be99-0b5d6d022fb9",
+             "subscriptionKey": "c91d6dfc-4d7d-4f6a-88ca-06bcd59c4bd7",
+             "id": "101"
         }
     ],
     "padlock": "",

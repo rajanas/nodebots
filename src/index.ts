@@ -8,12 +8,12 @@ import * as restify from 'restify';
 // Import required bot services.
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
 import { BotFrameworkAdapter } from 'botbuilder';
-
+import { QnAMakerEndpoint } from 'botbuilder-ai';
 // Import required bot configuration.
-import { BotConfiguration, IEndpointService } from 'botframework-config';
+import { BotConfiguration, IEndpointService, IQnAService } from 'botframework-config';
 
 // This bot's main dialog.
-import { MyBot } from './bot';
+import { QnAMakerBot } from './bot';
 
 // Read botFilePath and botFileSecret from .env file.
 // Note: Ensure you have a .env file and include botFilePath and botFileSecret.
@@ -27,6 +27,7 @@ const DEV_ENVIRONMENT = 'development';
 // bot name as defined in .bot file
 // See https://aka.ms/about-bot-file to learn more about .bot file its use and bot configuration.
 const BOT_CONFIGURATION = (process.env.NODE_ENV || DEV_ENVIRONMENT);
+const QNA_CONFIGURATION = 'AtsFaqQnA';
 
 // Create HTTP server.
 const server = restify.createServer();
@@ -51,8 +52,16 @@ try {
     process.exit();
 }
 
-// Get bot endpoint configuration by service name
+// Get bot endpoint and QnAMaker configuration by service name.
 const endpointConfig = botConfig.findServiceByNameOrId(BOT_CONFIGURATION) as IEndpointService;
+const qnaConfig = botConfig.findServiceByNameOrId(QNA_CONFIGURATION) as IQnAService;
+
+// Map the contents to the required format for QnAMaker.
+const qnaEndpointSettings: QnAMakerEndpoint = {
+    endpointKey: qnaConfig.endpointKey,
+    host: qnaConfig.hostname,
+    knowledgeBaseId: qnaConfig.kbId,
+};
 
 // Create adapter.
 // See https://aka.ms/about-bot-adapter to learn more about .bot file its use and bot configuration.
@@ -64,18 +73,23 @@ const adapter = new BotFrameworkAdapter({
 // Catch-all for errors.
 adapter.onTurnError = async (context, error) => {
     // This check writes out errors to console log .vs. app insights.
-    console.error(`\n [onTurnError]: ${ error }`);
+    console.error(`\n [onTurnError]: ${error}`);
     // Send a message to the user
     await context.sendActivity(`Oops. Something went wrong!`);
 };
 
-// Create the main dialog.
-const myBot = new MyBot();
+let bot: QnAMakerBot;
+try {
+    bot = new QnAMakerBot(qnaEndpointSettings, {});
+} catch (err) {
+    console.error(`[botInitializationError]: ${ err }`);
+    process.exit();
+}
 
 // Listen for incoming requests.
 server.post('/api/messages', (req, res) => {
     adapter.processActivity(req, res, async (context) => {
         // Route to main dialog.
-        await myBot.onTurn(context);
+        await bot.onTurn(context);
     });
 });
